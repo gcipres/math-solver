@@ -1,0 +1,125 @@
+.chewy-regular {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: chewy, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  position: absolute;
+  text-align: center;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.counter {
+  display: inline-flex;
+  text-align: center;
+  font-size: 48px;
+}
+
+.counter #correctAnswers {
+  padding-left: 10px;
+}
+
+.operation {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#operator {
+  padding-right: 48px;
+}
+
+#operation-display {
+  width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: end;
+  border: 9px solid;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
+
+#operation-display div {
+  font-size: 128px;
+}
+
+#divider {
+  margin-bottom: -36px;
+  margin-top: -72px;
+}
+
+.canvas-container {
+  display: inline-block;
+}
+
+canvas {
+  border: 2px solid #000;
+  border-radius: 15px;
+}
+
+input[type="number"] {
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  font-size: 96px;
+  border-radius: 15px;
+  border: 2px solid black;
+  font-family: chewy, Arial, sans-serif;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 15px;
+  font-weight: 600;
+  width: 100px;
+  height: 50px;
+}
+
+#clear {
+  background: #fddf17;
+  border: 1px solid #fddf17;
+  color: white;
+}
+
+#clear:active {
+  background: #e0c303;
+  border: 1px solid #e0c303;
+  color: white;
+}
+
+#check {
+  background: #45cf8e;
+  border: 1px solid #45cf8e;
+  color: white;
+}
+
+#check:active {
+  background: #119356;
+  border: 1px solid #119356;
+  color: white;
+}
+
+#message {
+  margin-top: 10px;
+  font-size: 18px;
+  color: red;
+}

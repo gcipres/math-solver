@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Solver</title>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="container" class="container">
+    <div id="message"></div>
+
+    <div class="carry-input">
+      <input type="number" id="carry">
+       <!-- <canvas id="carry-canvas" class="canvas" width="150" height="150"></canvas> -->
+    </div>
+    
+    <div class="operation">
+      <div id="operation-display">
+        <div id="operand1"></div>
+        <div style="display: inline-flex; padding-left: 48px;">
+            <div id="operator"></div>
+            <div id="operand2"></div>
+        </div>
+        <div id="divider">-----</div>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <input type="number" id="tens">
+      <input type="number" id="units">
+      <!-- <canvas id="tens-canvas" class="canvas" width="150" height="150"></canvas>
+      <canvas id="units-canvas" class="canvas" width="150" height="150"></canvas> -->
+    </div>
+
+    <div class="buttons">
+      <button id="clear">Clear</button>
+      <button id="check">Check</button>
+    </div>
+    <div class="counter">Corrects:<div id="correctAnswers"></div></div>
+  </div>
+  <script src="script-input.js"></script>
+   <!-- <script src="script-canvas.js"></script> -->
+</body>
+</html>
