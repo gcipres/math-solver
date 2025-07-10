@@ -14,6 +14,8 @@ let operation = { operand1: 0, operand2: 0, operator: '+' };
 let correctCount = 0;
 let totalCount = 0;
 
+let predictionTimeout = null;
+
 // Inicializar canvases como zonas de dibujo
 function setupCanvas(canvas) {
   const ctx = canvas.getContext('2d');
@@ -41,10 +43,10 @@ function setupCanvas(canvas) {
   const start = (e) => {
     isDrawing = true;
 
-    // Limpiar canvas antes de empezar a dibujar
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (predictionTimeout) {
+      clearTimeout(predictionTimeout);
+      predictionTimeout = null;
+    }
 
     const pos = getPos(e);
     ctx.beginPath();
@@ -72,31 +74,34 @@ function setupCanvas(canvas) {
     if (!hasDrawn) return;
     hasDrawn = false;
 
-    // Ejecutar predicción al soltar
-    if (!model) return;
-    const tensor = preprocessCanvas(canvas);
-    const feeds = { input: tensor };
-    try {
-      const output = await model.run(feeds);
-      const predictions = output.output.data;
-      const predictedNumber = predictions.indexOf(Math.max(...predictions));
-      if (e.target.id === 'units-canvas') units = predictedNumber
-      if (e.target.id === 'tens-canvas') tens = predictedNumber
-      if (e.target.id === 'carry-canvas') carry = predictedNumber
+    predictionTimeout = setTimeout(async () => {
+      if (!model) return;
+      const tensor = preprocessCanvas(canvas);
+      const feeds = { input: tensor };
+      try {
+        const output = await model.run(feeds);
+        const predictions = output.output.data;
+        const predictedNumber = predictions.indexOf(Math.max(...predictions));
+        if (e.target.id === 'units-canvas') units = predictedNumber
+        if (e.target.id === 'tens-canvas') tens = predictedNumber
+        if (e.target.id === 'carry-canvas') carry = predictedNumber
+  
+        // Mostrar número sobre el canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 36px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(predictedNumber, canvas.width / 2, canvas.height / 2);
+      } catch (error) {
+        console.error('Error predicting:', error);
+      }
 
-      // Mostrar número sobre el canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#000';
-      ctx.font = 'bold 36px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(predictedNumber, canvas.width / 2, canvas.height / 2);
-    } catch (error) {
-      console.error('Error predicting:', error);
-    }
+      predictionTimeout = null
+    }, 1000)
   };
 
   canvas.addEventListener('mousedown', start);
